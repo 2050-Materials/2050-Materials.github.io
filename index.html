@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2050 Materials - Product Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #111827; /* Dark background */
+            color: #E5E7EB; /* Light text */
+        }
+
+        /* Glassmorphism effect class */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Styling for the tab buttons */
+        .tab-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Active state for tab buttons */
+        .tab-btn.active {
+            background: rgba(59, 130, 246, 0.2); /* Semi-transparent blue */
+            color: #BFDBFE; /* Light blue text */
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        /* Styling for the tab content panes */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Fade-in animation for content */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.4);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.6);
+        }
+
+        /* Styling for data grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Key-value pair styling */
+        .data-pair {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .data-key {
+            color: #9CA3AF; /* Gray-400 */
+            font-weight: 500;
+            padding-right: 1rem;
+        }
+        .data-value {
+            color: #E5E7EB; /* Gray-200 */
+            text-align: right;
+            word-break: break-all;
+        }
+        
+        /* Card for nested objects */
+        .nested-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Styling for LCA Tables */
+        .lca-table {
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: rgba(0,0,0,0.2);
+        }
+        .lca-table th, .lca-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+        .lca-table th {
+            background-color: rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        .lca-table tbody tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header with logo -->
+        <header class="mb-8 flex items-center justify-between">
+            <a href="https://app.2050-materials.com" target="_blank" class="flex items-center space-x-3">
+                <img src="https://globalabc.org/sites/default/files/members/2050%20materials%20grey%20green.png" alt="2050 Materials Logo" class="h-10 w-auto">
+                <span class="text-xl font-bold text-gray-200">Product Showcase</span>
+            </a>
+        </header>
+
+        <main class="glass-effect rounded-2xl p-4 sm:p-6">
+            <!-- Tab Navigation -->
+            <div id="tab-container" class="flex items-center space-x-2 sm:space-x-4 border-b border-gray-700/60 pb-4 mb-6 overflow-x-auto">
+                <!-- Tabs will be dynamically inserted here -->
+            </div>
+
+            <!-- Tab Content Area -->
+            <div id="content-container">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </main>
+        
+        <footer class="text-center text-gray-500 text-sm mt-8">
+            <p>Generated Product Data Viewer</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- DATA PLACEHOLDER ---
+        const productData = {'TotalProducts': 11, 'countProductsOnPage': 11, 'current_page': 1, 'product_range': [1, 11], 'next': null, 'previous': null, 'results': [{'name': 'ACEFLEX ECO CABLE PURE 5G10mm²', 'description': "ECO CABLE is Prysmian Group's environmental concept to help our customers in their environmental work every day. Halogen-free flexible power and installation cable. For fixed installation indoor and outdoor, in pipes and ground. Environmental documentation is attached to each product number. Aceflex is a very flexible and user-friendly installation cable. For fixed installation, indoors and outdoors, in pipes and ground, but not in explosive areas. Halogen-free, flame retardant and self-extingui", 'company': 'Prysmian Group Sverige AB', 'group_elements_nrm_1': ['5 - Services'], 'elements_nrm_1': ['5.X - Services installations'], 'product_type': 'Power cable', 'product_type_family': 'Electrical', 'material_type': 'Copper', 'building_applications': 'Services installations', 'building_types': 'Commercial', 'material_type_family': 'Metals', 'manufacturing_location': 'Prysmian Group production site Oulu (Finland), Johdintie 5, 90630 Oulu, Finland', 'manufacturing_country': 'Finland', 'city': 'Oulu', 'continent': 'Europe', 'lat': '65.0560028', 'lng': '25.5891983', 'material_facts': {'data_source': 'EPD', 'compliances': ['EN 15804:2012+A2:2019', 'ISO 14025', 'ISO 9001', 'ISO 14001', 'ISO 45001', 'IEC 60502-1', 'UNE 21123 Part 4', 'REACH', 'ROHS', 'IEC/EN 60754-1/2', 'IEC/EN 61034-2', 'EN 13501-6'], 'epd_operator': 'EPD Norway', 'total_co2e_kg_mf': 2.7003000000000004, 'total_biogenic_co2e': 0.021342, 'manufacturing': 2.2760000000000002, 'on_site_installation': 0.0551, 'use_and_maintenance': 0.0, 'end_of_life': 0.3692, 'water_use_kg': 51.529, 'recycled_content': 23.400170078636364, 'recyclable_content': 0.21104545454545454, 'reuse_potential': 0.0, 'energy_recovery_possibility': 0.018886515151515154, 'odp': 184800.0, 'language': 'English', 'data_source_link__date_of_issue': '2023-05-20', 'data_source_link__certificate_expiry': '2028-05-20', 'data_source_link__certificate_type__family__name': 'Product certifications (General)', 'mass_per_declared_unit': 0.66, 'mass_per_declared_unit_estimated': false, 'certificate_subtype': 'Specific Dataset', 'net_fresh_water_use': {'A1': 45.9, 'A1A2A3': 51.529, 'A2': 0.179, 'A3': 5.45, 'A4': 0.0878, 'A5': 1.04, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 11.2, 'B7': 0.0, 'Btotal': 11.2, 'C1': 0.0, 'C2': 0.106, 'C3': 0.0874, 'C4': 0.108, 'Ctotal': 0.3014, 'D': -7.97}, 'non_renewable_primary_energy': {'A1': 24.8, 'A1A2A3': 31.95, 'A2': 1.61, 'A3': 5.54, 'A4': 0.771, 'A5': 0.675, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 10.3, 'B7': 0.0, 'Btotal': 10.3, 'C1': 0.0, 'C2': 0.93, 'C3': 0.0247, 'C4': 0.0845, 'Ctotal': 1.0392000000000001, 'D': -2.42}, 'non_renewable_primary_energy_raw_materials': {'A1': 9.85, 'A1A2A3': 9.85, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.00567, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': -9.56, 'C4': 0.0, 'Ctotal': -9.56, 'D': 0.0}, 'non_renewable_secondary_fuels': {'A1': 0.00187, 'A1A2A3': 0.06604, 'A2': 0.00227, 'A3': 0.0619, 'A4': 0.00114, 'A5': 0.00138, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0604, 'B7': 0.0, 'Btotal': 0.0604, 'C1': 0.0, 'C2': 0.00137, 'C3': 0.0, 'C4': 0.000362, 'Ctotal': 0.001732, 'D': -0.0899}, 'renewable_primary_energy': {'A1': 4.36, 'A1A2A3': 6.0298, 'A2': 0.0198, 'A3': 1.65, 'A4': 0.00971, 'A5': 0.121, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 4.93, 'B7': 0.0, 'Btotal': 4.93, 'C1': 0.0, 'C2': 0.0117, 'C3': 0.000809, 'C4': 0.0091, 'Ctotal': 0.021609000000000003, 'D': -2.61}, 'renewable_primary_energy_raw_materials': {'A1': 0.0, 'A1A2A3': 0.0, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.0, 'Ctotal': 0.0, 'D': 0.0}, 'renewable_secondary_fuels': {'A1': 0.0179, 'A1A2A3': 0.037889, 'A2': 0.000689, 'A3': 0.0193, 'A4': 0.000339, 'A5': 0.000776, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0191, 'B7': 0.0, 'Btotal': 0.0191, 'C1': 0.0, 'C2': 0.00041, 'C3': 2.16e-05, 'C4': 0.000189, 'Ctotal': 0.0006206, 'D': 0.00634}, 'secondary_material_use': {'A1': 0.154, 'A1A2A3': 0.1540347, 'A2': 0.0, 'A3': 3.47e-05, 'A4': 0.0, 'A5': 0.00311, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.000846, 'Ctotal': 0.000846, 'D': 0.07}, 'total_non_renewable_primary_energy': {'A1': 34.6, 'A1A2A3': 41.75, 'A2': 1.61, 'A3': 5.54, 'A4': 0.771, 'A5': 0.68, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 10.3, 'B7': 0.0, 'Btotal': 10.3, 'C1': 0.0, 'C2': 0.93, 'C3': -9.54, 'C4': 0.0845, 'Ctotal': -8.5255, 'D': -2.42}, 'total_renewable_primary_energy': {'A1': 4.36, 'A1A2A3': 6.0298, 'A2': 0.0198, 'A3': 1.65, 'A4': 0.00971, 'A5': 0.121, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 4.93, 'B7': 0.0, 'Btotal': 4.93, 'C1': 0.0, 'C2': 0.0117, 'C3': 0.000809, 'C4': 0.0091, 'Ctotal': 0.021609000000000003, 'D': -2.61}, 'components_for_reuse': {'A1': 0.0, 'A1A2A3': 0.0, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.0, 'Ctotal': 0.0, 'D': 0.0}, 'exported_electrical_energy': {'A1': 0.000231, 'A1A2A3': 0.039231, 'A2': 0.0, 'A3': 0.039, 'A4': 0.0, 'A5': 0.00533, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.227, 'C4': 0.000204, 'Ctotal': 0.22720400000000002, 'D': -8.83e-05}, 'exported_thermal_energy': {'A1': 0.00349, 'A1A2A3': 0.59349, 'A2': 0.0, 'A3': 0.59, 'A4': 0.0, 'A5': 0.0806, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 3.43, 'C4': 0.00309, 'Ctotal': 3.43309, 'D': -0.0134}, 'hazardous_waste_disposed': {'A1': 0.0194, 'A1A2A3': 0.035686999999999997, 'A2': 8.7e-05, 'A3': 0.0162, 'A4': 4.22e-05, 'A5': 0.000907, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000537, 'B7': 0.0, 'Btotal': 0.000537, 'C1': 0.0, 'C2': 5.09e-05, 'C3': 0.0, 'C4': 0.00953, 'Ctotal': 0.0095809, 'D': -0.00272}, 'materials_for_energy_recovery': {'A1': 0.000124, 'A1A2A3': 0.000124651, 'A2': 0.0, 'A3': 6.51e-07, 'A4': 0.0, 'A5': 0.00238, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.119, 'C4': 2.13e-05, 'Ctotal': 0.1190213, 'D': -0.000361}, 'materials_for_recycling': {'A1': 5.29e-05, 'A1A2A3': 0.0013929, 'A2': 0.0, 'A3': 0.00134, 'A4': 0.0, 'A5': 0.00503, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.25, 'C4': 1.22e-05, 'Ctotal': 0.2500122, 'D': -0.00274}, 'non_hazardous_waste_disposed': {'A1': 0.578, 'A1A2A3': 0.7416999999999999, 'A2': 0.134, 'A3': 0.0297, 'A4': 0.0671, 'A5': 0.0236, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0339, 'B7': 0.0, 'Btotal': 0.0339, 'C1': 0.0, 'C2': 0.0809, 'C3': 0.0, 'C4': 0.29, 'Ctotal': 0.3709, 'D': -0.122}, 'radioactive_waste_disposed': {'A1': 7.41e-05, 'A1A2A3': 0.000145, 'A2': 1.1e-05, 'A3': 5.99e-05, 'A4': 5.26e-06, 'A5': 3.14e-06, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000155, 'B7': 0.0, 'Btotal': 0.000155, 'C1': 0.0, 'C2': 6.35e-06, 'C3': 0.0, 'C4': 5.78e-07, 'Ctotal': 6.928e-06, 'D': -0.000389}, 'abiotic_depletion_potential_fossil': {'A1': 34.5, 'A1A2A3': 41.46, 'A2': 1.61, 'A3': 5.35, 'A4': 0.771, 'A5': 0.865, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 10.3, 'B7': 0.0, 'Btotal': 10.3, 'C1': 0.0, 'C2': 0.93, 'C3': 0.0247, 'C4': 0.0845, 'Ctotal': 1.0392000000000001, 'D': -2.42}, 'abiotic_depletion_potential_non_fossil': {'A1': 0.000447, 'A1A2A3': 0.00045020000000000005, 'A2': 1.73e-06, 'A3': 1.47e-06, 'A4': 8.47e-07, 'A5': 9.05e-06, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 3.5e-06, 'B7': 0.0, 'Btotal': 3.5e-06, 'C1': 0.0, 'C2': 1.02e-06, 'C3': 1.4e-08, 'C4': 2.84e-08, 'Ctotal': 1.0624e-06, 'D': -0.000225}, 'acidification_potential': {'A1': 0.00471875, 'A1A2A3': 0.00476203125, 'A2': 1.834375e-05, 'A3': 2.49375e-05, 'A4': 6.5e-06, 'A5': 9.5625e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 1.78125e-05, 'B7': 0.0, 'Btotal': 1.78125e-05, 'C1': 0.0, 'C2': 7.84375e-06, 'C3': 1.446875e-06, 'C4': 8.9375e-07, 'Ctotal': 1.0184374999999999e-05, 'D': -0.001259375}, 'ozone_depletion_potential': {'A1': 136000.0, 'A1A2A3': 184800.0, 'A2': 23900.0, 'A3': 24900.0, 'A4': 11500.0, 'A5': 4220.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 42900.0, 'B7': 0.0, 'Btotal': 42900.0, 'C1': 0.0, 'C2': 13800.0, 'C3': 300.0, 'C4': 1060.0, 'Ctotal': 15160.0, 'D': -1450000.0}, 'eutrophication_potential_freshwater': {'A1': 0.0039296, 'A1A2A3': 0.00395601335, 'A2': 2.37925e-06, 'A3': 2.40341e-05, 'A4': 1.16086e-06, 'A5': 7.9523e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 1.81744e-05, 'B7': 0.0, 'Btotal': 1.81744e-05, 'C1': 0.0, 'C2': 1.39972e-06, 'C3': 9.1179e-08, 'C4': 1.79545e-07, 'Ctotal': 1.670444e-06, 'D': -0.00083504}, 'eutrophication_potential_marine': {'A1': 0.00606, 'A1A2A3': 0.006373, 'A2': 0.000168, 'A3': 0.000145, 'A4': 6.27e-05, 'A5': 0.000131, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 9.71e-05, 'B7': 0.0, 'Btotal': 9.71e-05, 'C1': 0.0, 'C2': 7.56e-05, 'C3': 2.22e-05, 'C4': 2.43e-05, 'Ctotal': 0.00012209999999999999, 'D': -0.0017}, 'eutrophication_potential_terrestrial': {'A1': 0.089, 'A1A2A3': 0.0925, 'A2': 0.00186, 'A3': 0.00164, 'A4': 0.000693, 'A5': 0.00189, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00128, 'B7': 0.0, 'Btotal': 0.00128, 'C1': 0.0, 'C2': 0.000836, 'C3': 0.000239, 'C4': 0.000114, 'Ctotal': 0.001189, 'D': -0.0262}, 'formation_potential_of_tropospheric_ozone': {'A1': 0.0267, 'A1A2A3': 0.027689000000000002, 'A2': 0.000568, 'A3': 0.000421, 'A4': 0.000223, 'A5': 0.000565, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000291, 'B7': 0.0, 'Btotal': 0.000291, 'C1': 0.0, 'C2': 0.000269, 'C3': 5.73e-05, 'C4': 3.53e-05, 'Ctotal': 0.00036159999999999995, 'D': -0.00711}, 'global_warming_potential_fossil': {'A1': 1.96, 'A1A2A3': 2.2760000000000002, 'A2': 0.104, 'A3': 0.212, 'A4': 0.0496, 'A5': 0.0551, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0876, 'B7': 0.0, 'Btotal': 0.0876, 'C1': 0.0, 'C2': 0.0598, 'C3': 0.353, 'C4': 0.0162, 'Ctotal': 0.429, 'D': -0.259}, 'global_warming_potential_biogenic': {'A1': 0.0128, 'A1A2A3': 0.021342, 'A2': 4.2e-05, 'A3': 0.0085, 'A4': 2.03e-05, 'A5': 0.000429, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00178, 'B7': 0.0, 'Btotal': 0.00178, 'C1': 0.0, 'C2': 2.45e-05, 'C3': 3.16e-06, 'C4': 1.32e-06, 'Ctotal': 2.898e-05, 'D': -0.00115}, 'global_warming_potential_luluc': {'A1': 0.00217, 'A1A2A3': 0.0041222, 'A2': 3.22e-05, 'A3': 0.00192, 'A4': 1.45e-05, 'A5': 8.31e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00569, 'B7': 0.0, 'Btotal': 0.00569, 'C1': 0.0, 'C2': 1.75e-05, 'C3': 4.84e-07, 'C4': 1.23e-06, 'Ctotal': 1.9214e-05, 'D': -0.000938}, 'global_warming_potential_aggregate': {'A1': 1.98, 'A1A2A3': 2.306, 'A2': 0.104, 'A3': 0.222, 'A4': 0.0496, 'A5': 0.0556, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.095, 'B7': 0.0, 'Btotal': 0.095, 'C1': 0.0, 'C2': 0.0598, 'C3': 0.353, 'C4': 0.0162, 'Ctotal': 0.429, 'D': -0.261}, 'water_deprivation_potential': {'A1': 63.9, 'A1A2A3': 359.09000000000003, 'A2': 1.19, 'A3': 294.0, 'A4': 0.592, 'A5': 7.25, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 1040.0, 'B7': 0.0, 'Btotal': 1040.0, 'C1': 0.0, 'C2': 0.714, 'C3': 0.0715, 'C4': 1.68, 'Ctotal': 2.4655, 'D': 9.55}, 'freshwater_ecotoxicity_potential': {'A1': 1240.0, 'A1A2A3': 1245.1100000000001, 'A2': 1.16, 'A3': 3.95, 'A4': 0.564, 'A5': 27.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 5.42, 'B7': 0.0, 'Btotal': 5.42, 'C1': 0.0, 'C2': 0.68, 'C3': 0.113, 'C4': 103.0, 'Ctotal': 103.793, 'D': -371.0}, 'human_toxicity_potential_cancer': {'A1': 2.44e-08, 'A1A2A3': 2.4506e-08, 'A2': 0.0, 'A3': 1.06e-10, 'A4': 0.0, 'A5': 4.91e-10, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 1.56e-10, 'B7': 0.0, 'Btotal': 1.56e-10, 'C1': 0.0, 'C2': 0.0, 'C3': 7e-12, 'C4': 5e-12, 'Ctotal': 1.2e-11, 'D': -5.24e-09}, 'human_toxicity_potential_non_cancer': {'A1': 2.08e-06, 'A1A2A3': 2.08392e-06, 'A2': 1.14e-09, 'A3': 2.78e-09, 'A4': 5.45e-10, 'A5': 4.17e-08, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 3.75e-09, 'B7': 0.0, 'Btotal': 3.75e-09, 'C1': 0.0, 'C2': 6.58e-10, 'C3': 3.37e-10, 'C4': 1.09e-10, 'Ctotal': 1.104e-09, 'D': -4.48e-07}, 'ionising_radiation_potential': {'A1': 0.0822, 'A1A2A3': 0.22022, 'A2': 0.00702, 'A3': 0.131, 'A4': 0.00337, 'A5': 0.00456, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.352, 'B7': 0.0, 'Btotal': 0.352, 'C1': 0.0, 'C2': 0.00406, 'C3': 4.44e-05, 'C4': 0.000512, 'Ctotal': 0.0046164000000000005, 'D': -0.00447}, 'particulate_matter_formation_potential': {'A1': 3.03e-07, 'A1A2A3': 3.1563e-07, 'A2': 8.86e-09, 'A3': 3.77e-09, 'A4': 4.36e-09, 'A5': 6.52e-09, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 4.11e-09, 'B7': 0.0, 'Btotal': 4.11e-09, 'C1': 0.0, 'C2': 5.26e-09, 'C3': 1.84e-10, 'C4': 5.16e-10, 'Ctotal': 5.96e-09, 'D': -9.02e-08}, 'soil_quality_potential': {'A1': 22.6, 'A1A2A3': 27.650000000000002, 'A2': 1.78, 'A3': 3.27, 'A4': 0.885, 'A5': 0.596, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 4.54, 'B7': 0.0, 'Btotal': 4.54, 'C1': 0.0, 'C2': 1.07, 'C3': 0.00319, 'C4': 0.205, 'Ctotal': 1.2781900000000002, 'D': -6.59}, 'declared_unit': 'm', 'scaling_factors': {'m': {'value': 1.0, 'estimated': false}, 'kg': {'value': 0.66, 'estimated': false}, 'lb': {'value': 1.4550521173212931, 'estimated': false}, 'ust': {'value': 0.000727525256700673, 'estimated': false}, 'mt': {'value': 0.00066, 'estimated': false}, 'in': {'value': 39.37007874015748, 'estimated': false}, 'ft': {'value': 3.280839895013123, 'estimated': false}, 'km': {'value': 0.001, 'estimated': false}, 'miles': {'value': 0.0006213727366498068, 'estimated': false}}}, 'linear_density': 0.66, 'linear_density_estimated': false, 'unique_product_uuid_v2': '610408a0-8d33-11ee-a26f-0242ac140004', 'eco_platform_id': '46979d80-ae7c-4f1f-a5f9-7e7e6f5a3cb4', 'registration_number': 'NEPD-4413-3638-EN', 'product_url': 'https://app.2050-materials.com/product/details_designer/prysmian-group-sverige-ab-aceflex-eco-cable-pure-5g10mm2', 'product_slug': 'prysmian-group-sverige-ab-aceflex-eco-cable-pure-5g10mm2', 'updated': '2025-06-11T14:03:40.767683Z', 'life_expectancy': 30.0, 'certificate_url': 'https://app.2050-materials.com/media/certificates/7268c068-6b7.pdf', 'uniclass_systems': ['(Ss_70_20) Electrical power transmission and distribution systems'], 'uniclass_materials': ['(Ma_40_52_18) Copper'], 'fire_performance': 'Dca-s2,d2,a1', 'porosity': 0.0003, 'thermal_conductivity_estimated': false, 'porosity_estimated': true, 'life_expectancy_estimated': false}, {'name': 'ACEFLEX ECO CABLE PURE 5G6mm²', 'description': "36% recycled copper. Produced at zero emission plant. ECO CABLE is Prysmian Group's environmental concept to help our customers in their environmental work every day. Halogen-free flexible power and installation cable. For fixed installation indoor and outdoor, in pipes and ground. Environmental documentation is attached to each product number. Aceflex is a very flexible and user-friendly installation cable. For fixed installation, indoors and outdoors, in pipes and ground, but not in explosive", 'company': 'Prysmian Group Sverige AB', 'group_elements_nrm_1': ['5 - Services'], 'elements_nrm_1': ['5.X - Services installations'], 'product_type': 'Power cable', 'product_type_family': 'Electrical', 'material_type': 'Copper', 'building_applications': 'Services installations', 'building_types': 'Commercial', 'material_type_family': 'Metals', 'manufacturing_location': 'Prysmian Group production site Oulu (Finland), Johdintie 5, 90630 Oulu, Finland', 'manufacturing_country': 'Finland', 'city': 'Oulu', 'continent': 'Europe', 'lat': '65.0560028', 'lng': '25.5891983', 'material_facts': {'data_source': 'EPD', 'compliances': ['EN 15804:2012+A2:2019', 'ISO 14025:2010'], 'epd_operator': 'EPD Norway', 'total_co2e_kg_mf': 1.7658, 'total_biogenic_co2e': 0.013101999999999999, 'manufacturing': 1.451, 'on_site_installation': 0.036, 'use_and_maintenance': 0.0, 'end_of_life': 0.2788, 'water_use_kg': 31.888999999999996, 'recycled_content': 21.050824045238095, 'recyclable_content': 0.21430952380952384, 'reuse_potential': 0.0, 'energy_recovery_possibility': 0.02138571428571429, 'odp': 119.80000000000001, 'language': 'English', 'data_source_link__date_of_issue': '2023-05-20', 'data_source_link__certificate_expiry': '2028-05-20', 'data_source_link__certificate_type__family__name': 'Product certifications (General)', 'mass_per_declared_unit': 0.42, 'mass_per_declared_unit_estimated': false, 'certificate_subtype': 'Specific Dataset', 'net_fresh_water_use': {'A1': 28.2, 'A1A2A3': 31.888999999999996, 'A2': 0.179, 'A3': 3.51, 'A4': 0.0566, 'A5': 0.642, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 19.7, 'B7': 0.0, 'Btotal': 19.7, 'C1': 0.0, 'C2': 0.0683, 'C3': 0.0619, 'C4': 0.069, 'Ctotal': 0.1992, 'D': -4.99}, 'non_renewable_primary_energy': {'A1': 15.4, 'A1A2A3': 20.580000000000002, 'A2': 1.61, 'A3': 3.57, 'A4': 0.497, 'A5': 0.434, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 18.0, 'B7': 0.0, 'Btotal': 18.0, 'C1': 0.0, 'C2': 0.599, 'C3': 0.0184, 'C4': 0.0541, 'Ctotal': 0.6715, 'D': -1.45}, 'non_renewable_primary_energy_raw_materials': {'A1': 7.52, 'A1A2A3': 7.52, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.00445, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': -7.3, 'C4': 0.0, 'Ctotal': -7.3, 'D': 0.0}, 'non_renewable_secondary_fuels': {'A1': 0.0013, 'A1A2A3': 0.043469999999999995, 'A2': 0.00227, 'A3': 0.0399, 'A4': 0.000733, 'A5': 0.000907, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.106, 'B7': 0.0, 'Btotal': 0.106, 'C1': 0.0, 'C2': 0.000885, 'C3': 0.0, 'C4': 0.000291, 'Ctotal': 0.001176, 'D': -0.0704}, 'renewable_primary_energy': {'A1': 2.54, 'A1A2A3': 3.6198, 'A2': 0.0198, 'A3': 1.06, 'A4': 0.00625, 'A5': 0.0729, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 8.65, 'B7': 0.0, 'Btotal': 8.65, 'C1': 0.0, 'C2': 0.00754, 'C3': 0.000587, 'C4': 0.00552, 'Ctotal': 0.013647, 'D': -1.83}, 'renewable_primary_energy_raw_materials': {'A1': 0.0, 'A1A2A3': 0.0, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.0, 'Ctotal': 0.0, 'D': 0.0}, 'renewable_secondary_fuels': {'A1': 0.0132, 'A1A2A3': 0.026289, 'A2': 0.000689, 'A3': 0.0124, 'A4': 0.000219, 'A5': 0.000539, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0335, 'B7': 0.0, 'Btotal': 0.0335, 'C1': 0.0, 'C2': 0.000264, 'C3': 1.59e-05, 'C4': 0.000115, 'Ctotal': 0.0003949, 'D': 0.00363}, 'secondary_material_use': {'A1': 0.0884, 'A1A2A3': 0.08842240000000001, 'A2': 0.0, 'A3': 2.24e-05, 'A4': 0.0, 'A5': 0.00178, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.000493, 'Ctotal': 0.000493, 'D': 0.0406}, 'total_non_renewable_primary_energy': {'A1': 22.9, 'A1A2A3': 28.08, 'A2': 1.61, 'A3': 3.57, 'A4': 0.497, 'A5': 0.439, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 18.0, 'B7': 0.0, 'Btotal': 18.0, 'C1': 0.0, 'C2': 0.599, 'C3': -7.28, 'C4': 0.0541, 'Ctotal': -6.6269, 'D': -1.45}, 'total_renewable_primary_energy': {'A1': 2.54, 'A1A2A3': 3.6198, 'A2': 0.0198, 'A3': 1.06, 'A4': 0.00625, 'A5': 0.0729, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 8.65, 'B7': 0.0, 'Btotal': 8.65, 'C1': 0.0, 'C2': 0.00754, 'C3': 0.000586, 'C4': 0.00552, 'Ctotal': 0.013645999999999998, 'D': -1.83}, 'components_for_reuse': {'A1': 0.0, 'A1A2A3': 0.0, 'A2': 0.0, 'A3': 0.0, 'A4': 0.0, 'A5': 0.0, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0, 'C4': 0.0, 'Ctotal': 0.0, 'D': 0.0}, 'exported_electrical_energy': {'A1': 0.000166, 'A1A2A3': 0.025266, 'A2': 0.0, 'A3': 0.0251, 'A4': 0.0, 'A5': 0.00394, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.171, 'C4': 0.000121, 'Ctotal': 0.17112100000000002, 'D': -0.000513}, 'exported_thermal_energy': {'A1': 0.00252, 'A1A2A3': 0.38252, 'A2': 0.0, 'A3': 0.38, 'A4': 0.0, 'A5': 0.0596, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 2.59, 'C4': 0.00184, 'Ctotal': 2.59184, 'D': -0.00776}, 'hazardous_waste_disposed': {'A1': 0.0111, 'A1A2A3': 0.021687, 'A2': 8.7e-05, 'A3': 0.0105, 'A4': 2.72e-05, 'A5': 0.000558, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000942, 'B7': 0.0, 'Btotal': 0.000942, 'C1': 0.0, 'C2': 3.28e-05, 'C3': 0.0, 'C4': 0.00614, 'Ctotal': 0.0061728, 'D': -0.00158}, 'materials_for_energy_recovery': {'A1': 8.94e-05, 'A1A2A3': 8.982e-05, 'A2': 0.0, 'A3': 4.2e-07, 'A4': 0.0, 'A5': 0.00179, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.0896, 'C4': 1.24e-05, 'Ctotal': 0.0896124, 'D': -0.000209}, 'materials_for_recycling': {'A1': 3.81e-05, 'A1A2A3': 0.0009001, 'A2': 0.0, 'A3': 0.000862, 'A4': 0.0, 'A5': 0.00292, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0, 'B7': 0.0, 'Btotal': 0.0, 'C1': 0.0, 'C2': 0.0, 'C3': 0.145, 'C4': 8.94e-06, 'Ctotal': 0.14500894, 'D': -0.00159}, 'non_hazardous_waste_disposed': {'A1': 0.333, 'A1A2A3': 0.48610000000000003, 'A2': 0.134, 'A3': 0.0191, 'A4': 0.0432, 'A5': 0.0154, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.0595, 'B7': 0.0, 'Btotal': 0.0595, 'C1': 0.0, 'C2': 0.0521, 'C3': 0.0, 'C4': 0.189, 'Ctotal': 0.2411, 'D': -0.072}, 'radioactive_waste_disposed': {'A1': 4.42e-05, 'A1A2A3': 9.38e-05, 'A2': 1.1e-05, 'A3': 3.86e-05, 'A4': 3.39e-06, 'A5': 2.03e-06, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000271, 'B7': 0.0, 'Btotal': 0.000271, 'C1': 0.0, 'C2': 4.09e-06, 'C3': 0.0, 'C4': 3.69e-07, 'Ctotal': 4.459e-06, 'D': -2.52e-06}, 'abiotic_depletion_potential_fossil': {'A1': 22.8, 'A1A2A3': 27.86, 'A2': 1.61, 'A3': 3.45, 'A4': 0.497, 'A5': 0.58, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 18.0, 'B7': 0.0, 'Btotal': 18.0, 'C1': 0.0, 'C2': 0.599, 'C3': 0.0184, 'C4': 0.0541, 'Ctotal': 0.6715, 'D': -1.45}, 'abiotic_depletion_potential_non_fossil': {'A1': 0.000256, 'A1A2A3': 0.00025867500000000004, 'A2': 1.73e-06, 'A3': 9.45e-07, 'A4': 5.46e-07, 'A5': 5.2e-06, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 6.15e-06, 'B7': 0.0, 'Btotal': 6.15e-06, 'C1': 0.0, 'C2': 6.58e-07, 'C3': 1.03e-08, 'C4': 1.82e-08, 'Ctotal': 6.865e-07, 'D': -0.000131}, 'acidification_potential': {'A1': 0.002703125, 'A1A2A3': 0.00273753125, 'A2': 1.834375e-05, 'A3': 1.60625e-05, 'A4': 4.1875e-06, 'A5': 5.5e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 3.125e-05, 'B7': 0.0, 'Btotal': 3.125e-05, 'C1': 0.0, 'C2': 5.0625e-06, 'C3': 1.08125e-06, 'C4': 5.71875e-07, 'Ctotal': 6.715625000000001e-06, 'D': -0.00073125}, 'ozone_depletion_potential': {'A1': 79.9, 'A1A2A3': 119.80000000000001, 'A2': 23.9, 'A3': 16.0, 'A4': 7.38, 'A5': 2.74, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 75.3, 'B7': 0.0, 'Btotal': 75.3, 'C1': 0.0, 'C2': 8.9, 'C3': 0.222, 'C4': 0.686, 'Ctotal': 9.808, 'D': -1100.0}, 'eutrophication_potential_freshwater': {'A1': 0.00225695, 'A1A2A3': 0.0022748332500000003, 'A2': 2.37975e-06, 'A3': 1.55035e-05, 'A4': 7.4918e-07, 'A5': 4.5446e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 3.1948e-05, 'B7': 0.0, 'Btotal': 3.1948e-05, 'C1': 0.0, 'C2': 9.0258e-07, 'C3': 6.7233e-08, 'C4': 1.12362e-07, 'Ctotal': 1.082175e-06, 'D': -0.00048506}, 'eutrophication_potential_marine': {'A1': 0.00351, 'A1A2A3': 0.0037713000000000004, 'A2': 0.000168, 'A3': 9.33e-05, 'A4': 4.04e-05, 'A5': 7.8e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00017, 'B7': 0.0, 'Btotal': 0.00017, 'C1': 0.0, 'C2': 4.87e-05, 'C3': 1.66e-05, 'C4': 1.72e-05, 'Ctotal': 8.25e-05, 'D': -0.000998}, 'eutrophication_potential_terrestrial': {'A1': 0.0514, 'A1A2A3': 0.05432, 'A2': 0.00186, 'A3': 0.00106, 'A4': 0.000447, 'A5': 0.00111, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00224, 'B7': 0.0, 'Btotal': 0.00224, 'C1': 0.0, 'C2': 0.000539, 'C3': 0.000179, 'C4': 7.32e-05, 'Ctotal': 0.0007912, 'D': -0.0153}, 'formation_potential_of_tropospheric_ozone': {'A1': 0.0155, 'A1A2A3': 0.016339, 'A2': 0.000568, 'A3': 0.000271, 'A4': 0.000144, 'A5': 0.000335, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.000511, 'B7': 0.0, 'Btotal': 0.000511, 'C1': 0.0, 'C2': 0.000173, 'C3': 4.28e-05, 'C4': 2.29e-05, 'Ctotal': 0.0002387, 'D': -0.00415}, 'global_warming_potential_fossil': {'A1': 1.21, 'A1A2A3': 1.451, 'A2': 0.104, 'A3': 0.137, 'A4': 0.0319, 'A5': 0.036, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.154, 'B7': 0.0, 'Btotal': 0.154, 'C1': 0.0, 'C2': 0.0385, 'C3': 0.267, 'C4': 0.0118, 'Ctotal': 0.31729999999999997, 'D': -0.154}, 'global_warming_potential_biogenic': {'A1': 0.00758, 'A1A2A3': 0.013101999999999999, 'A2': 4.2e-05, 'A3': 0.00548, 'A4': 1.31e-05, 'A5': 0.000262, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00312, 'B7': 0.0, 'Btotal': 0.00312, 'C1': 0.0, 'C2': 1.58e-05, 'C3': 2.33e-06, 'C4': 9.98e-07, 'Ctotal': 1.9128e-05, 'D': -0.000676}, 'global_warming_potential_luluc': {'A1': 0.00127, 'A1A2A3': 0.0025422, 'A2': 3.22e-05, 'A3': 0.00124, 'A4': 9.33e-06, 'A5': 5.12e-05, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.00998, 'B7': 0.0, 'Btotal': 0.00998, 'C1': 0.0, 'C2': 1.12e-05, 'C3': 3.54e-07, 'C4': 7.65e-07, 'Ctotal': 1.2319e-05, 'D': -0.000665}, 'global_warming_potential_aggregate': {'A1': 1.22, 'A1A2A3': 1.467, 'A2': 0.104, 'A3': 0.143, 'A4': 0.032, 'A5': 0.0363, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.167, 'B7': 0.0, 'Btotal': 0.167, 'C1': 0.0, 'C2': 0.0386, 'C3': 0.267, 'C4': 0.0118, 'Ctotal': 0.3174, 'D': -0.155}, 'water_deprivation_potential': {'A1': 39.8, 'A1A2A3': 230.99, 'A2': 1.19, 'A3': 190.0, 'A4': 0.381, 'A5': 4.65, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 1830.0, 'B7': 0.0, 'Btotal': 1830.0, 'C1': 0.0, 'C2': 0.46, 'C3': 0.0504, 'C4': 1.02, 'Ctotal': 1.5304, 'D': 4.92}, 'freshwater_ecotoxicity_potential': {'A1': 709.0, 'A1A2A3': 712.7099999999999, 'A2': 1.16, 'A3': 2.55, 'A4': 0.363, 'A5': 15.5, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 9.5, 'B7': 0.0, 'Btotal': 9.5, 'C1': 0.0, 'C2': 0.438, 'C3': 0.0768, 'C4': 60.0, 'Ctotal': 60.5148, 'D': -216.0}, 'human_toxicity_potential_cancer': {'A1': 1.4e-08, 'A1A2A3': 1.4069e-08, 'A2': 0.0, 'A3': 6.9e-11, 'A4': 0.0, 'A5': 2.81e-10, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 2.73e-10, 'B7': 0.0, 'Btotal': 2.73e-10, 'C1': 0.0, 'C2': 0.0, 'C3': 6e-12, 'C4': 3e-12, 'Ctotal': 9.000000000000001e-12, 'D': -3.05e-09}, 'human_toxicity_potential_non_cancer': {'A1': 1.19e-06, 'A1A2A3': 1.19293e-06, 'A2': 1.14e-09, 'A3': 1.79e-09, 'A4': 3.51e-10, 'A5': 2.38e-08, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 6.58e-09, 'B7': 0.0, 'Btotal': 6.58e-09, 'C1': 0.0, 'C2': 4.24e-10, 'C3': 2.46e-10, 'C4': 6.8e-11, 'Ctotal': 7.379999999999999e-10, 'D': -2.6e-07}, 'ionising_radiation_potential': {'A1': 0.049, 'A1A2A3': 0.14012, 'A2': 0.00702, 'A3': 0.0841, 'A4': 0.00217, 'A5': 0.00291, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 0.617, 'B7': 0.0, 'Btotal': 0.617, 'C1': 0.0, 'C2': 0.00262, 'C3': 3.25e-05, 'C4': 0.000321, 'Ctotal': 0.0029735, 'D': -0.00291}, 'particulate_matter_formation_potential': {'A1': 1.76e-07, 'A1A2A3': 1.8728999999999998e-07, 'A2': 8.86e-09, 'A3': 2.43e-09, 'A4': 2.81e-09, 'A5': 3.87e-09, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 7.21e-09, 'B7': 0.0, 'Btotal': 7.21e-09, 'C1': 0.0, 'C2': 3.39e-09, 'C3': 1.36e-10, 'C4': 3.34e-10, 'Ctotal': 3.86e-09, 'D': -5.41e-08}, 'soil_quality_potential': {'A1': 13.0, 'A1A2A3': 16.89, 'A2': 1.78, 'A3': 2.11, 'A4': 0.57, 'A5': 0.366, 'B1': 0.0, 'B2': 0.0, 'B3': 0.0, 'B4': 0.0, 'B5': 0.0, 'B6': 7.97, 'B7': 0.0, 'Btotal': 7.97, 'C1': 0.0, 'C2': 0.688, 'C3': 0.00234, 'C4': 0.137, 'Ctotal': 0.82734, 'D': -4.16}, 'declared_unit': 'm', 'scaling_factors': {'m': {'value': 1.0, 'estimated': false}, 'kg': {'value': 0.42, 'estimated': false}, 'lb': {'value': 0.9259422564771865, 'estimated': false}, 'ust': {'value': 0.00046297061790042825, 'estimated': false}, 'mt': {'value': 0.00041999999999999996, 'estimated': false}, 'in': {'value': 39.37007874015748, 'estimated': false}, 'ft': {'value': 3.280839895013123, 'estimated': false}, 'km': {'value': 0.001, 'estimated': false}, 'miles': {'value': 0.0006213727366498068, 'estimated': false}}}, 'linear_density': 0.42, 'linear_density_estimated': false, 'unique_product_uuid_v2': '699d102e-8d33-11ee-9f4b-0242ac140004', 'eco_platform_id': '44e73288-8903-4858-b3ff-d82f0356fb75', 'registration_number': '56695', 'product_url': 'https://app.2050-materials.com/product/details_designer/prysmian-group-sverige-ab-aceflex-eco-cable-pure-5g6mm2', 'product_slug': 'prysmian-group-sverige-ab-aceflex-eco-cable-pure-5g6mm2', 'updated': '2025-06-11T14:08:01.507311Z', 'life_expectancy': 30.0, 'certificate_url': 'https://app.2050-materials.com/media/certificates/350d8337-b67.pdf', 'uniclass_systems': ['(Ss_70_20) Electrical power transmission and distribution systems'], 'uniclass_materials': ['(Ma_40_52_18) Copper'], 'fire_performance': 'Dca-s2,d2,a1', 'porosity': 0.0003, 'thermal_conductivity_estimated': false, 'porosity_estimated': true, 'life_expectancy_estimated': false}]};
+
+        // --- DYNAMIC CONTENT GENERATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabContainer = document.getElementById('tab-container');
+            const contentContainer = document.getElementById('content-container');
+
+            if (!productData || !productData.results) {
+                contentContainer.innerHTML = `<p class="text-center text-red-400">Error: Product data is missing or malformed.</p>`;
+                return;
+            }
+            
+            // Function to format numbers for display in tables
+            function formatNumberForTable(value) {
+                if (value === undefined || value === null) {
+                    return '<span class="text-gray-500">-</span>';
+                }
+                if (typeof value !== 'number') return value;
+                if (Math.abs(value) > 0 && Math.abs(value) < 0.001) {
+                     return value.toExponential(2);
+                }
+                return value.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3});
+            }
+            
+            // Function to render all LCA data into a single consolidated table
+            function renderConsolidatedLcaTable(metrics) {
+                const headers = [
+                    { key: 'metric', label: 'Metric' },
+                    { key: 'A1A2A3', label: 'Product (A1-A3)' },
+                    { key: 'A4', label: 'Construction (A4)' },
+                    { key: 'A5', label: 'Installation (A5)' },
+                    { key: 'Btotal', label: 'Use (B)' },
+                    { key: 'Ctotal', label: 'End of Life (C)' },
+                    { key: 'D', label: 'Benefits (D)' }
+                ];
+
+                let tableHTML = '<div class="overflow-x-auto rounded-lg border border-gray-700/60"><table class="lca-table w-full text-sm text-left"><thead><tr>';
+                headers.forEach(h => {
+                    tableHTML += `<th class="px-4 py-3">${h.label}</th>`;
+                });
+                tableHTML += '</tr></thead><tbody>';
+                
+                metrics.sort((a, b) => a.name.localeCompare(b.name)).forEach(metric => {
+                    tableHTML += '<tr class="border-t border-gray-700/60">';
+                    tableHTML += `<td class="px-4 py-3 font-semibold text-gray-300">${metric.name}</td>`; // The metric name
+                    headers.slice(1).forEach(h => { // Loop through stage headers
+                        const value = metric.data[h.key];
+                        tableHTML += `<td class="px-4 py-3 font-mono text-right">${formatNumberForTable(value)}</td>`;
+                    });
+                    tableHTML += '</tr>';
+                });
+
+                tableHTML += '</tbody></table></div>';
+                return tableHTML;
+            }
+
+            // Function to recursively render non-LCA data objects/arrays
+            function renderData(data) {
+                if (data === null || data === undefined) return `<span class="data-value text-gray-500">N/A</span>`;
+                if (Array.isArray(data)) {
+                    if (data.length === 0) return `<span class="data-value text-gray-500">Empty</span>`;
+                    return `<ul class="list-disc list-inside pl-2 mt-1 space-y-1">${data.map(item => `<li class="data-value">${renderData(item)}</li>`).join('')}</ul>`;
+                }
+                if (typeof data === 'object') {
+                    return `<div class="nested-card">${Object.entries(data).map(([key, value]) => `
+                        <div class="data-pair">
+                            <span class="data-key">${formatKey(key)}</span>
+                            <div class="flex-shrink-0">${renderData(value)}</div>
+                        </div>
+                    `).join('')}</div>`;
+                }
+                if (typeof data === 'number') {
+                    return `<span class="data-value font-mono">${Number.isInteger(data) ? data : data.toFixed(4)}</span>`;
+                }
+                if (typeof data === 'boolean') {
+                    return `<span class="data-value ${data ? 'text-green-400' : 'text-red-400'}">${data ? 'Yes' : 'No'}</span>`;
+                }
+                return `<span class="data-value">${data}</span>`;
+            }
+
+            // Function to format object keys into readable titles
+            function formatKey(key) {
+                return key.replace(/__/g, ' / ').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            }
+
+            productData.results.forEach((product, index) => {
+                const tabButton = document.createElement('button');
+                tabButton.className = 'flex-shrink-0 tab-btn px-4 py-2 text-sm font-semibold rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50';
+                tabButton.textContent = product.name;
+                tabButton.dataset.target = `content-${index}`;
+                tabContainer.appendChild(tabButton);
+
+                const contentPane = document.createElement('div');
+                contentPane.id = `content-${index}`;
+                contentPane.className = 'tab-content';
+                
+                let otherInfoHTML = '';
+                const otherKeys = Object.keys(product).filter(k => k !== 'name' && k !== 'company' && k !== 'description' && k !== 'material_facts');
+                otherKeys.forEach(key => {
+                    if(product[key]) {
+                        otherInfoHTML += `
+                            <div class="bg-gray-800/50 p-4 rounded-lg">
+                                <h3 class="font-semibold text-lg mb-2 text-gray-300">${formatKey(key)}</h3>
+                                ${renderData(product[key])}
+                            </div>
+                        `;
+                    }
+                });
+
+                let materialFactsHTML = '';
+                let lcaMetrics = [];
+                if (product.material_facts) {
+                    const materialFacts = product.material_facts;
+                    for (const key in materialFacts) {
+                        const value = materialFacts[key];
+                        if (typeof value === 'object' && value !== null && !Array.isArray(value) && ('A1A2A3' in value || 'A1' in value || 'Btotal' in value)) {
+                            lcaMetrics.push({ name: formatKey(key), data: value });
+                        } else {
+                             materialFactsHTML += `
+                                <div class="bg-gray-800/50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-lg mb-2 text-gray-300">${formatKey(key)}</h4>
+                                    ${renderData(value)}
+                                </div>
+                            `;
+                        }
+                    }
+                }
+
+                const consolidatedLcaTableHTML = lcaMetrics.length > 0 ? renderConsolidatedLcaTable(lcaMetrics) : '<p>No Life Cycle Assessment data available.</p>';
+
+                contentPane.innerHTML = `
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">${product.name}</h2>
+                    <p class="text-blue-300 font-medium mb-6">${product.company || 'N/A'}</p>
+                    <p class="text-gray-300 mb-8 max-w-4xl">${product.description || 'No description available.'}</p>
+                    
+                    <h3 class="text-xl font-bold text-white mt-8 mb-4 border-t border-gray-700/60 pt-6">Life Cycle Assessment Data</h3>
+                    ${consolidatedLcaTableHTML}
+
+                    <h3 class="text-xl font-bold text-white mt-8 mb-4 border-t border-gray-700/60 pt-6">Material Facts</h3>
+                    <div class="data-grid">${materialFactsHTML}</div>
+
+                    <h3 class="text-xl font-bold text-white mt-8 mb-4 border-t border-gray-700/60 pt-6">Other Information</h3>
+                    <div class="data-grid">${otherInfoHTML}</div>
+                `;
+                contentContainer.appendChild(contentPane);
+
+                tabButton.addEventListener('click', () => {
+                    tabContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    contentContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    tabButton.classList.add('active');
+                    contentPane.classList.add('active');
+                });
+            });
+
+            // Activate the first tab by default
+            if (tabContainer.children.length > 0) {
+                tabContainer.children[0].classList.add('active');
+                contentContainer.children[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
